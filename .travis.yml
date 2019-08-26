@@ -1,5 +1,4 @@
 language: node_js
-node_js: --lts
 before_script:
   - git config user.name "Wegnery219"
   - git config user.email "wegnery219@163.com"
