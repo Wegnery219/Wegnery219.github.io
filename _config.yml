@@ -80,6 +80,7 @@ theme: new-vno
 deploy:
   type: git
   repo: https://github.com/Wegnery219/Wegnery219.github.io.git
+  branch: master
 
 image_stream:
   jquery: false
