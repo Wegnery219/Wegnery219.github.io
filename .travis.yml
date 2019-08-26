@@ -2,7 +2,7 @@ language: node_js
 before_script:
   - git config user.name "Wegnery219"
   - git config user.email "wegnery219@163.com"
-  - sed -i'' "s~https://github.com/Wegnery219/Wegnery219.github.io.git~https://${Travis CI}@github.com/Wegnery219/Wegnery219.github.io.git~" _config.yml
+  - sed -i'' "s~https://github.com/Wegnery219/Wegnery219.github.io.git~https://${GITHUB_ACCESS_TOKEN}@github.com/Wegnery219/Wegnery219.github.io.git~" _config.yml
 script:
   - hexo g
   - hexo d
