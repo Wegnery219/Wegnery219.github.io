@@ -2,12 +2,12 @@
 title: Leetcode15+16
 tags: code
 comment: true
+date: 2019-08-31 12:09:00
 ---
 
 ## Leetcode 15
 
 ### 题目描述：
-```
 Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
 Note:
@@ -23,7 +23,6 @@ A solution set is:
   [-1, 0, 1],
   [-1, -1, 2]
 ]
-```
 
 ### 解
 
@@ -166,7 +165,6 @@ public:
 ## Leetcode16
 
 ### 题目描述：
-```
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 
 Example:
@@ -174,7 +172,6 @@ Example:
 Given array nums = [-1, 2, 1, -4], and target = 1.
 
 The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
-```
 
 ### 解
 

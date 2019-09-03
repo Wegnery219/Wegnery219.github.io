@@ -2,9 +2,9 @@
 title: Leetcode34
 tags: code
 comment: true
+date: 2019-09-02 12:09:00
 ---
 ### 题目描述：
-```
 在排序数组中查找元素的第一个和最后一个位置
 给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
 
@@ -21,8 +21,7 @@ comment: true
 输入: nums = [5,7,7,8,8,10], target = 6
 输出: [-1,-1]
 
-链接：https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array
-```
+[链接：https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array)
 
 ### 解
 使用二分查找

@@ -2,9 +2,9 @@
 title: Leetcode18
 tags: code
 comment: true
+date: 2019-09-01 12:09:00
 ---
 ### 题目描述：
-```
 给定一个包含 n 个整数的数组 nums 和一个目标值 target，判断 nums 中是否存在四个元素 a，b，c 和 d ，使得 a + b + c + d 的值与 target 相等？找出所有满足条件且不重复的四元组。
 
 注意：
@@ -23,8 +23,7 @@ comment: true
 ]
 
 
-链接：https://leetcode-cn.com/problems/4sum
-```
+[链接：https://leetcode-cn.com/problems/4sum](https://leetcode-cn.com/problems/4sum)
 
 ### 解
 
