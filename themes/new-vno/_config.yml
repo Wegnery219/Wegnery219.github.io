@@ -35,7 +35,7 @@ image_stream:
 #disqus
 disqus: 
   enable: true
-  shortname:
+  shortname: Ning Ning
   count: true
 
 #mathjax
