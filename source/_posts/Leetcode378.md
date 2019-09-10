@@ -20,7 +20,7 @@ k = 8,
 
 [链接：https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix](https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix)
 ### 解：
-1. 用堆来存储矩阵中的元素，但是没有利用到矩阵的大小关系，时间复杂度O(N*log(N))
+1. 用堆来存储矩阵中的元素，但是没有利用到矩阵的大小关系，时间复杂度O(N^2*log(N^2))
 #### c++ code[108ms 13.3MB]
 ```
 class Solution {
