@@ -139,7 +139,7 @@ public:
 };
 ```
 #### c++ code from idol[48ms 36.1MB]
-加了clear函数以后hash就可以反复用啦，缺点是tick有限，所以到最后了会崩，虽然爱豆的比我快但我也是100%哦
+加了clear函数以后hash就可以反复用啦，缺点是tick有限，所以到最后了会崩，虽然爱豆的比我快但我也是100%哦，比我快的原因是没有用memset.
 ```
 #include <vector>
 #include <unordered_map>
