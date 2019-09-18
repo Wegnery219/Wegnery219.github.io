@@ -1,5 +1,5 @@
 ---
-title: Leetcode410
+title: Leetcode410:Split Array Largest Sum
 tags: code
 comment: true
 date: 2019-09-10 12:09:00

@@ -1,5 +1,5 @@
 ---
-title: Leetcode34
+title: Leetcode34:Find First and Last Position of Element in Sorted Array
 tags: code
 comment: true
 date: 2019-09-02 12:09:00

@@ -1,5 +1,5 @@
 ---
-title: Leetcode300
+title: Leetcode300:Longest Increasing Subsequence
 tags: code
 comment: true
 date: 2019-09-04 12:09:00

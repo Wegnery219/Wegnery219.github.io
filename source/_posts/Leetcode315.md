@@ -1,5 +1,5 @@
 ---
-title: Leetcode315
+title: Leetcode315:Count of Smaller Numbers After Self
 tags: code
 comment: true
 date: 2019-09-05 12:09:00

@@ -1,5 +1,5 @@
 ---
-title: Leetcode349+350
+title: Leetcode349+350:Intersection of Two Arrays I&II
 tags: code
 comment: true
 date: 2019-09-08 12:09:00

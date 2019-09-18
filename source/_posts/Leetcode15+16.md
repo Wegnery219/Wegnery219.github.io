@@ -1,5 +1,5 @@
 ---
-title: Leetcode15+16
+title: Leetcode15:3Sum+16:3Sum Closest
 tags: code
 comment: true
 date: 2019-08-31 12:09:00

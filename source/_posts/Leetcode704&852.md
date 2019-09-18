@@ -1,5 +1,5 @@
 ---
-title: Leetcode704+852
+title: Leetcode704:Binary Search+852:Peak Index in a Mountain Array 
 tags: code
 comment: true
 date: 2019-09-14 14:14:00
