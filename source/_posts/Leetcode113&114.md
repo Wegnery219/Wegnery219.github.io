@@ -213,4 +213,4 @@ Out: [[0,0,0],[0,0,0],[0,0,0]]
 In: arr[0][0]=5
 Out: [[5,0,0],[0,0,0],[0,0,0]]
 ```
-所以results.append的时候相当于每次都把同一个对象的引用传进去，所以一变tmp就全都变了，解决方法是copy一份，python list的简单赋值方式是slice.`results.append(self.tmp[:])`
+所以results.append的时候相当于每次都把同一个对象的引用传进去，所以一变tmp就全都变了，解决方法是copy一份，python list的简单复制方式是slice.`results.append(self.tmp[:])`
