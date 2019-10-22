@@ -1,6 +1,6 @@
 ---
 title: Hash
-tags: code
+tags: Data Structure
 comment: true
 date: 2019-09-08 12:09:00
 ---

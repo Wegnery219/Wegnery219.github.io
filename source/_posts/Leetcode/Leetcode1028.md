@@ -155,3 +155,4 @@ public:
 ```
 WA1: int(S[i])不是将char变成int，要用S[i]-'0'。
 WA2: 在while循环的时候使用left_end又用int重定义了，导致出了循环之后left_end的值不对。
+变快:`TreeNode* helper(string S, int left, int right)`改成`TreeNode* helper(string& S, int left, int right)`[44ms 24.6MB]
