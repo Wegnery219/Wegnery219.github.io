@@ -51,3 +51,20 @@ public:
 ```
 计算一个vector中的最大值可以用max_element函数
 WA1:`runtime error: reference binding to null pointer of type 'value_type' (stl_vector.h)`赋值vector的时候没有用pushback，直接vector[0]=...，所以是空指针错。
+最后不用`int position;`，可以直接*取出元素`return *max_element(record.begin(),record.end());`[4ms 9.6MB]
+不用vector的方法[8ms 9.1MB]
+```
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum=nums[0];
+        int maxmium=nums[0];
+        for(int i=1;i<nums.size();i++){
+            if(sum<0) sum=nums[i];
+            else sum+=nums[i];
+            if(sum>maxmium) maxmium=sum;
+        }
+        return maxmium;
+    }
+};
+```
