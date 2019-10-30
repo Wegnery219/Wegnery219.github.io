@@ -105,9 +105,6 @@ public:
         for(int i=1;i<prices.size();i++){
             zero = max(one+prices[i], zero);
             one = max(one, zero-prices[i]);
-
-            zero = zero;
-            one = one;
         }
         return max(one, zero);
     }
