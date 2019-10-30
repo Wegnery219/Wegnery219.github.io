@@ -28,7 +28,7 @@ void sleep_on(struct task_struct **p) //task_struct* 是指向进程的指针
 ```
 操作系统第一次调度这个进程的时候是进程1，进程1在初始化的时候init将b_wait置为NULL。
 假设进程5进程9都是想用这个缓冲块的其他进程，则b_wait和tmp的变化如下所示。
-![image1](https://github.com/Wegnery219/IMAGE/blob/master/file1.png?raw=true)
+![image1](/imgs/os.png)
 用tmp链将各个内核栈串成 进程1->进程5->进程9，在执行最后的if语句`if(tmp)`的时候，按照链表上的顺序进行唤醒。b_wait永远指向这一串的最后一个，在这里是进程9。
 #### 今天上课看的两个video记的一点笔记，等资源上传到课程网站上了记得要补这里
 cpu 寄存器：eip:代码区放指令,ebp：动态数据区栈底,esp:栈顶
