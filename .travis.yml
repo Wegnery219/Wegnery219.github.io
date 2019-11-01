@@ -3,6 +3,7 @@ node_js: 10
 
 script:
   - hexo g
+  - cp -r imgs public/
 
 deploy:
   provider: pages
