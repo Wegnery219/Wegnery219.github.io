@@ -173,4 +173,94 @@ public:
 };
 ```
 ### 188. Best Time to Buy and Sell Stock IV
-留一个给明天嘻嘻
+condition:Design an algorithm to find the maximum profit. You may complete at most k transactions.
+标准的k次交易，转换方程为：
+```
+dp[i][k][0]=max(dp[i-1][k][0],dp[i-1][k][1]+prices[i])
+dp[i][k][1]=max(dp[i-1][k][1],dp[i-1][k-1][0]-prices[i])
+
+//base condition
+dp[-1][k][0]=0 dp[-1][k][1]=-infinity
+dp[i][0][0]=0 dp[i][0][1]=-infinity
+```
+#### c++ code[24MS 19.5mb]
+```
+class Solution {
+public:
+    int infiniteProfit(vector<int>& prices) {
+        if(prices.size()==0) return 0;
+
+        int dp_i_0=0;
+        int dp_i_1=-prices[0];
+
+        for(int i=1;i<prices.size();i++){
+            int temp=dp_i_0;
+            dp_i_0=max(dp_i_0,dp_i_1+prices[i]);
+            dp_i_1=max(dp_i_1,temp-prices[i]);
+        }
+
+        return dp_i_0;
+    }
+
+    int maxProfit(int k, vector<int>& prices) {
+        if(prices.size()==0) return 0;
+        
+        if(k>prices.size()/2) return infiniteProfit(prices);
+        vector<int> stock(2,0); //whether have stock
+        vector<vector<int>> transaction(k+1, stock);
+        vector<vector<vector<int>>> dp(prices.size()+1, transaction);
+
+        for(int i=0;i<dp.size();i++){
+            for(int k=0;k<transaction.size();k++){
+                if(i==0) {dp[i][k][0]=0;dp[i][k][1]=-0x7fffffff;}
+                else if(k==0) {dp[i][k][0]=0;dp[i][k][1]=-0x7fffffff;}
+                else{
+                    dp[i][k][0]=max(dp[i-1][k][0],dp[i-1][k][1]+prices[i-1]);
+                    dp[i][k][1]=max(dp[i-1][k][1],dp[i-1][k-1][0]-prices[i-1]);
+                }
+            }
+        }
+        return dp[dp.size()-1][transaction.size()-1][0];
+    }
+};
+```
+当k>length/2的时候实际上是可以让你无限次交易的，因为一般来说length天最多交易length/2次。然后就可以直接用买股票II的算法，如果不加这个判断会mle，在k=10000000的时候:)
+然后呢，看了讨论区，这个三维数组是可以用二维数组来替代的。
+#### c++ code[4ms 9.2MB]
+```
+class Solution {
+public:
+    int infiniteProfit(vector<int>& prices) {
+        if(prices.size()==0) return 0;
+
+        int dp_i_0=0;
+        int dp_i_1=-prices[0];
+
+        for(int i=1;i<prices.size();i++){
+            int temp=dp_i_0;
+            dp_i_0=max(dp_i_0,dp_i_1+prices[i]);
+            dp_i_1=max(dp_i_1,temp-prices[i]);
+        }
+
+        return dp_i_0;
+    }
+
+    int maxProfit(int k, vector<int>& prices) {
+        if(prices.size()==0) return 0;
+        
+        if(k>prices.size()/2) return infiniteProfit(prices);
+        vector<int> stock{0,-0x7fffffff}; //whether have stock
+        vector<vector<int>> dp(k+1, stock);
+        // vector<vector<vector<int>>> dp(prices.size()+1, transaction);
+        
+        for(int i=0;i<prices.size();i++){
+            for(int j=dp.size()-1;j>0;j--){
+                    dp[j][0]=max(dp[j][0],dp[j][1]+prices[i]);
+                    dp[j][1]=max(dp[j][1],dp[j-1][0]-prices[i]);
+                }
+            }
+        return dp[dp.size()-1][0];
+    }
+};
+```
+初始条件是因为对任何一个还没开始的交易，手中没有股票利润就是0，手中有股票是不合法的。k是倒着来的原因是dp[i][j][1]的时候要用到dp[i-1][j][1]，要保证dp[i-1][j][1](现在的dp[j][1])在dp[i][j][1]更新之前没有被更新过。
