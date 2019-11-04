@@ -2,7 +2,7 @@
 title: Leetcode300:Longest Increasing Subsequence
 tags: code
 comment: true
-date: 2019-09-04 12:09:00
+date: 2019-11-03 12:09:00
 ---
 ### 题目描述
 给定一个无序的整数数组，找到其中最长上升子序列的长度。
@@ -95,6 +95,97 @@ class Solution(object):
         return len(dp)
 ```
 #### C++ code [8ms 8.5MB]
+```
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        if(nums.size()==0){
+            return 0;
+        }
+        int length = nums.size();
+        vector<int> dp;
+        dp.push_back(nums[0]);
+        int j = 0;
+        for(int i=1; i<length;i++){
+            if(nums[i]>dp[j]){
+                dp.push_back(nums[i]);
+                j = j + 1;
+            }
+            else{
+                int index = lower_bound(dp.begin(), dp.end(), nums[i]) - dp.begin();
+                dp[index] = nums[i];
+
+            }
+        }
+        return dp.size();
+    }
+};
+```
+
+O(n^2)的另一种做法，来自于算法导论第十五章的课后习题
+
+复制一个数组s'，对s’进行排序,找s和s'的最长公共子序列。这种做法的好处就是可以存下来最后的LIS是什么，当然对这道题不是很必要。而且用了很多额外的存储。缺点就是解决不了重复，如果原始数组中存在重复数组，需要对s‘进行去重。
+#### c++ code[140ms 77MB]
+```
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> numsnew=nums;
+        sort(nums.begin(),nums.end());
+        nums.erase(unique(nums.begin(),nums.end()),nums.end());
+        vector<vector<int>> record(numsnew.size()+1,vector<int> (nums.size()+1, 0));
+        int length=0;
+
+        for(int i=1;i<=numsnew.size();i++){
+            for (int j = 1; j <= nums.size(); j++)
+            {
+                if (nums[j-1]==numsnew[i-1])
+                {
+                    record[i][j]=record[i-1][j-1]+1;
+                }
+                else if(record[i-1][j]>=record[i][j-1]) record[i][j]=record[i-1][j];
+                else record[i][j]=record[i][j-1];
+            }
+            
+        }
+        
+        return record[numsnew.size()][nums.size()];
+    }
+};
+```
+这里其实可以不用二维的数组的。改成用两个一维数组。
+#### c++ code[116ms 8.9MB]
+```
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> numsnew=nums;
+        sort(nums.begin(),nums.end());
+        nums.erase(unique(nums.begin(),nums.end()),nums.end());
+        vector<int> dp(nums.size()+1, 0);
+        vector<int> temp(nums.size()+1,0);
+
+        for(int i=1;i<=numsnew.size();i++){
+            for (int j = 1; j <= nums.size(); j++)
+            {
+                if (nums[j-1]==numsnew[i-1])
+                {
+                    dp[j]=temp[j-1]+1;
+                }
+                else if(temp[j]>=dp[j-1]) dp[j]=temp[j];
+                else dp[j]=dp[j-1];
+            }
+            temp.assign(dp.begin(),dp.end());
+        }
+        
+        return dp[nums.size()];
+    }
+};
+```
+内存相比二维数组还是省了很多的，但是跟二分做法相比还是蠢。
+O(nlogn)
+利用的思想是一个长度为i的候选子序列的尾元素至少不比一个长度为i-1的候选子序列的尾元素小。书上这么写的，就是维护一个数组。但是缺点是这个数组里存的并不是最终的LIS。比如[1,3,4,6,2]最后数组里是[1,2,4,6]，并不是最终的结果，具体过程参考[这里](https://www.felix021.com/blog/read.php?1587)
+#### c++ code
 ```
 class Solution {
 public:
