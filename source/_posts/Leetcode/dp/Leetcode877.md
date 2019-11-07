@@ -34,10 +34,11 @@ dp[i][j]=piles[i] if i==j
 ```
 base condition:
 ```
-dp[-1][j],dp[i][length+1],这种情况应该是非法的吧(?),然后所以应该初始化成MAXINT?
+dp[i][j] 当i>j时为非法，可以continue掉，因为看循环可以看出来用不到这种情况。
 ```
 目前用循环的写法还没过。
 #### c++ code[60ms 74.9MB]
+递归
 ```
 #define MAXINT 0x7fffffff
 class Solution {
@@ -53,6 +54,27 @@ public:
     bool stoneGame(vector<int>& piles) {
         vector<vector<int>> record(501, vector<int> (501,MAXINT));
         if(dp(piles, record, 0, piles.size()-1)>0) return true;
+        else return false;
+    }
+};
+```
+#### c++ code[16ms 9.6MB]
+循环
+```
+class Solution {
+public:
+    bool stoneGame(vector<int>& piles) {
+        int length=piles.size();
+
+        int dp[length][length];
+        for(int i=length-1;i>=0;i--){
+            for(int j=0;j<length;j++){
+                if(i==j) dp[i][j]=piles[i];
+                else if(i>j) continue;
+                else dp[i][j]=max(piles[i]-dp[i+1][j], piles[j]-dp[i][j-1]);
+            }
+        }
+        if(dp[0][length-1]>0) return true;
         else return false;
     }
 };
