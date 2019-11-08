@@ -72,4 +72,39 @@ public:
 ```
 WA:之前有一次指针错误，原因是在sumfunc中没有判断end和arr.size()的关系，如果end超出arr.size()应该返回一个特别小的值，这样在`max(mvalue, sum-dp(piles, record, begin+i, newM))`中就可以返回mvalue了，就是合法的那个值。
 
-循环做法待我复习一下操作系统再写。
+循环做法要比递归多循环,代码还没有通过,很气，不搞了。
+```
+class Solution {
+public:
+    int sumfunc(vector<int>& arr, int begin, int end){
+        if(end>=arr.size()) return -0x7fffffff;
+        int sum=0;
+        for(int i=begin;i<=end;i++) sum+=arr[i];
+        return sum;
+    }
+
+    int stoneGameII(vector<int>& piles) {
+        vector<vector<int>> dp(piles.size()+1,vector<int> (piles.size(),0));
+
+        int length=piles.size();
+        for(int i=length-1;i>=0;i--){
+            for(int m=1;m<length;m++){
+                int mvalue=-0x7fffffff;
+                    for(int j=1;j<min(2*m, length+1-i);j++){
+                        int sum=sumfunc(piles, i, i+j-1);
+                        int newM;
+                        if(j>m) newM=j;
+                        else newM=m;
+                        if(newM>length-1) newM=length-1;
+                        mvalue=max(mvalue, sum-dp[i+j][newM]);
+                }
+            dp[i][m]=mvalue;
+        }
+    }
+        int diff=dp[0][1];
+        int add=sumfunc(piles,0,piles.size()-1);
+
+        return (diff+add)/2;
+    }
+};
+```
