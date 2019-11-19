@@ -4,8 +4,8 @@
 
 # Site
 title: Ning Ning
-subtitle: Personal Blog
-description: 投己所好
+subtitle: 投己所好
+description: 
 keywords:
 author: Ning Ning
 language: zh-Hans
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: new-vno
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
