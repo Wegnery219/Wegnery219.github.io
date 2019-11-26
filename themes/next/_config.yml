@@ -216,7 +216,7 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Post meta display settings
@@ -396,12 +396,25 @@ valine:
 # Support for LiveRe comments system.
 # You can get your uid from https://livere.com/insight/myCode (General web site)
 #livere_uid: your uid
-
+# gitalk
+gitalk:
+  enable: true
+  ClientID: 6573f911da4349fc9ab6
+  ClientSecret: 034400baf36061ab9814d24129908a063a59ca4a
+  repo: Wegnery219.github.io
+  owner: Wegnery219
+  adminUser: Wegnery219
+  IdPrefix: gitalk
+  labels: gitalk
+  perPage: 10
+  pagerDirection: last
+  createIssueManually: false
+  distractionFreeMode: false
 # Gitment
 # Introduction: https://imsun.net/posts/gitment-introduction/
 # You can get your Github ID from https://api.github.com/users/<Github username>
 gitment:
-  enable: true
+  enable: false
   mint: true # RECOMMEND, A mint on Gitment, to support count, language and proxy_gateway
   count: true # Show comments count in post meta area
   lazy: false # Comments lazy loading with a button
