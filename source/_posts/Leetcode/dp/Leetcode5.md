@@ -104,3 +104,4 @@ public:
     }
 };
 ```
+注意最后这里是right-left-1因为此时right和left是已经++和--过的，是不符合s[right]==s[left]的right-left-1=(right-1)-(left+1)+1,一开始写错了直接写成right-left+1了。
