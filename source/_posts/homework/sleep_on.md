@@ -3,6 +3,7 @@ title: sleep_on function in Linux
 tags: os
 comment: true
 date: 2019-10-30 12:09:00
+description: 结合源代码分析Linux操作系统中的sleep_on函数，sleep_on是当前进程进入等待状态，唤醒链表上下一个进程的函数。
 ---
 #### sleep on function
 ```

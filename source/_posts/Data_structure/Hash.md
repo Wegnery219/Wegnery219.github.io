@@ -3,6 +3,7 @@ title: Hash
 tags: Data Structure
 comment: true
 date: 2019-09-08 12:09:00
+description: 手写两种hash table:open hash,close hash.
 ---
 哈希是一种经典的数据结构，通过额外的一个数组空间，实现O(1)的查找。 查找迅速，但是带来的缺点是hash table的长度如果过长，整体占用空间会很大，因此提出了散列函数，用取余，随机，定义函数等方式将一个数映射到一个地址空间，如果存在了散列冲突，解决方法分为openhash,closehash。
 [wiki链接](https://zh.wikipedia.org/wiki/哈希表)

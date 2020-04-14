@@ -3,6 +3,7 @@ title: All Stock
 tags: code
 comment: true
 date: 2019-11-2 12:09:00
+description: 以Leetcode121，122，123,188为例，介绍了四个股票问题的通用解法。
 ---
 所有股票题的通用解法参考链接：[link](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/yi-ge-tong-yong-fang-fa-tuan-mie-6-dao-gu-piao-wen/)
 使用状态+选择的状态机方法。
