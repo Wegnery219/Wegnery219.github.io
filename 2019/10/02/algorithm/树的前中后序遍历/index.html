@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="以Leetcode94，144，145为例，介绍了在面试中经常出现的树遍历的基本操作。">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树的前中后序遍历">
+<meta property="og:url" content="https://wegnery219.github.io/2019/10/02/algorithm/树的前中后序遍历/index.html">
+<meta property="og:site_name" content="Ning Ning">
+<meta property="og:description" content="以Leetcode94，144，145为例，介绍了在面试中经常出现的树遍历的基本操作。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-18T02:52:34.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树的前中后序遍历">
+<meta name="twitter:description" content="以Leetcode94，144，145为例，介绍了在面试中经常出现的树遍历的基本操作。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wegnery219.github.io/2019/10/02/algorithm/树的前中后序遍历/">
+
+
+
+
+
+  <title>树的前中后序遍历 | Ning Ning</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ning Ning</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">投己所好</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wegnery219.github.io/2019/10/02/algorithm/树的前中后序遍历/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ning Ning">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ning Ning">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">树的前中后序遍历</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-02T12:09:00+00:00">
+                2019-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  以Leetcode94，144，145为例，介绍了在面试中经常出现的树遍历的基本操作。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>每一个遍历都用了两种方法，recursive(递归)和iteratively(用栈)</p>
+<h2 id="Leetcode94-Binary-Tree-Inorder-Traversal"><a href="#Leetcode94-Binary-Tree-Inorder-Traversal" class="headerlink" title="Leetcode94:Binary Tree Inorder Traversal"></a>Leetcode94:Binary Tree Inorder Traversal</h2><h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>Given a binary tree, return the inorder traversal of its nodes’ values.<br>Example:<br>Input: [1,null,2,3]</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"> \</span><br><span class="line">  <span class="number">2</span></span><br><span class="line"> /</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>Output: [1,3,2]<br>Follow up: Recursive solution is trivial, could you do it iteratively?</p>
+<h3 id="解"><a href="#解" class="headerlink" title="解"></a>解</h3><h4 id="python-code-20ms-11-7MB"><a href="#python-code-20ms-11-7MB" class="headerlink" title="python code[20ms 11.7MB]"></a>python code[20ms 11.7MB]</h4><p>用递归</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inorderTraversal</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> root==<span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        left = self.inorderTraversal(root.left)</span><br><span class="line">        right = self.inorderTraversal(root.right)</span><br><span class="line">        <span class="keyword">return</span> left+[root.val]+right</span><br></pre></td></tr></table></figure>
+
+<h4 id="c-code-0ms-8-7MB"><a href="#c-code-0ms-8-7MB" class="headerlink" title="c++ code[0ms 8.7MB]"></a>c++ code[0ms 8.7MB]</h4><p>用栈，一开始的做法改node了，因为不然会死循环，虽然这个右节点的左节点被访问过了，但是没有record,下次还会再访问，所以就把访问过的左节点改成空。狠毒如我。</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * <span class="keyword">Definition</span> <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *<span class="built_in">left</span>;</span><br><span class="line"> *     TreeNode *<span class="built_in">right</span>;</span><br><span class="line"> *     TreeNode(int x) : val(x), <span class="built_in">left</span>(NULL), <span class="built_in">right</span>(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        stack&lt;TreeNode*&gt; s;</span><br><span class="line">        vector&lt;int&gt; res;</span><br><span class="line">        TreeNode* tmp;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> res;</span><br><span class="line">        s.push(root);</span><br><span class="line">        while (!s.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            root = s.<span class="built_in">top</span>();</span><br><span class="line">            while (root-&gt;<span class="built_in">left</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                s.push(root-&gt;<span class="built_in">left</span>);</span><br><span class="line">                tmp = root;</span><br><span class="line">                root = root-&gt;<span class="built_in">left</span>;</span><br><span class="line">                tmp-&gt;<span class="built_in">left</span>=nullptr;</span><br><span class="line">            &#125;</span><br><span class="line">            res.push_back(root-&gt;val);</span><br><span class="line">            s.pop();</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;<span class="built_in">right</span>!=nullptr) s.push(root-&gt;<span class="built_in">right</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>不改node的做法呢，是在每次while开头访问top的时候，让这个top的所有左节点都已经被访问过了。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition for a binary tree <span class="keyword">node</span>.<span class="title"></span></span><br><span class="line"><span class="title"> * struct</span> TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *left;</span><br><span class="line"> *     TreeNode *right;</span><br><span class="line"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector<span class="tag">&lt;int&gt;</span> inorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        std::stack<span class="tag">&lt;TreeNode *&gt;</span> s;</span><br><span class="line">        vector<span class="tag">&lt;int&gt;</span> res;</span><br><span class="line">        while (root) &#123;</span><br><span class="line">            s.push(root);</span><br><span class="line">            root = root-&gt;left;</span><br><span class="line">        &#125;</span><br><span class="line">        while (!s.empty()) &#123;</span><br><span class="line">            TreeNode *<span class="keyword">node</span> <span class="title">= s</span>.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            res.push_back(<span class="keyword">node</span><span class="title">-&gt;val</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">node</span> <span class="title">= node-</span>&gt;right;</span><br><span class="line">            while (<span class="keyword">node</span><span class="title">) &#123;</span></span><br><span class="line"><span class="title">                s</span>.push(<span class="keyword">node</span><span class="title">);</span></span><br><span class="line"><span class="title">                node</span> = <span class="keyword">node</span><span class="title">-&gt;left</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode144-Binary-Tree-Preorder-Traversal"><a href="#Leetcode144-Binary-Tree-Preorder-Traversal" class="headerlink" title="Leetcode144:Binary Tree Preorder Traversal"></a>Leetcode144:Binary Tree Preorder Traversal</h2><h3 id="题目描述-1"><a href="#题目描述-1" class="headerlink" title="题目描述"></a>题目描述</h3><p>Given a binary tree, return the preorder traversal of its nodes’ values.<br>Example:<br>Input: [1,null,2,3]</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"> \</span><br><span class="line">  <span class="number">2</span></span><br><span class="line"> /</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>Output: [1,2,3]<br>Follow up: Recursive solution is trivial, could you do it iteratively?</p>
+<h3 id="解-1"><a href="#解-1" class="headerlink" title="解"></a>解</h3><h4 id="python-code-16ms-11-9MB"><a href="#python-code-16ms-11-9MB" class="headerlink" title="python code[16ms 11.9MB]"></a>python code[16ms 11.9MB]</h4><p>用递归，python用递归解决这种是真的方便又简洁啊</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">preorderTraversal</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> root==<span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">return</span> [root.val]+self.preorderTraversal(root.left)+self.preorderTraversal(root.right)</span><br></pre></td></tr></table></figure>
+
+<h4 id="c-code-4ms-9-2MB"><a href="#c-code-4ms-9-2MB" class="headerlink" title="c++ code[4ms 9.2MB]"></a>c++ code[4ms 9.2MB]</h4><p>前序比较简单咯，碰见了就直接push back就行了</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     <span class="built_in">int</span> val;</span><br><span class="line"> *     TreeNode *<span class="built_in">left</span>;</span><br><span class="line"> *     TreeNode *<span class="built_in">right</span>;</span><br><span class="line"> *     TreeNode(<span class="built_in">int</span> x) : val(x), <span class="built_in">left</span>(<span class="literal">NULL</span>), <span class="built_in">right</span>(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="built_in">int</span>&gt; preorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        vector&lt;<span class="built_in">int</span>&gt; res;</span><br><span class="line">        stack&lt;TreeNode*&gt; s;</span><br><span class="line">        <span class="keyword">if</span> (root==nullptr) return res;</span><br><span class="line">        s.push(root);</span><br><span class="line">        <span class="keyword">while</span> (!s.<span class="literal">empty</span>())</span><br><span class="line">        &#123;</span><br><span class="line">            root = s.top();</span><br><span class="line">            s.pop();</span><br><span class="line">            res.push_back(root-&gt;val);</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;<span class="built_in">right</span>) s.push(root-&gt;<span class="built_in">right</span>);</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;<span class="built_in">left</span>) s.push(root-&gt;<span class="built_in">left</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Leetcode145-Binary-Tree-Postorder-Traversal"><a href="#Leetcode145-Binary-Tree-Postorder-Traversal" class="headerlink" title="Leetcode145:Binary Tree Postorder Traversal"></a>Leetcode145:Binary Tree Postorder Traversal</h2><h3 id="题目描述-2"><a href="#题目描述-2" class="headerlink" title="题目描述"></a>题目描述</h3><p>Given a binary tree, return the postorder traversal of its nodes’ values.<br>Example:<br>Input: [1,null,2,3]</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"> \</span><br><span class="line">  <span class="number">2</span></span><br><span class="line"> /</span><br><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>Output: [3,2,1]<br>Follow up: Recursive solution is trivial, could you do it iteratively?</p>
+<h3 id="解-2"><a href="#解-2" class="headerlink" title="解"></a>解</h3><h4 id="python-code-28ms-11-8MB"><a href="#python-code-28ms-11-8MB" class="headerlink" title="python code[28ms 11.8MB]"></a>python code[28ms 11.8MB]</h4><p>递归</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"># class TreeNode(object):</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.left = None</span></span><br><span class="line"><span class="comment">#         self.right = None</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">postorderTraversal</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type root: TreeNode</span></span><br><span class="line"><span class="string">        :rtype: List[int]</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> root==<span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">return</span> self.postorderTraversal(root.left)+self.postorderTraversal(root.right)+[root.val]</span><br></pre></td></tr></table></figure>
+
+<h4 id="c-code-4ms-9-1MB"><a href="#c-code-4ms-9-1MB" class="headerlink" title="c++ code[4ms 9.1MB]"></a>c++ code[4ms 9.1MB]</h4><p>和中序差不多，但是在把当前root-&gt;val放进result之前要判断一下root-&gt;right是否访问过</p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * <span class="keyword">Definition</span> <span class="keyword">for</span> a binary tree node.</span><br><span class="line"> * struct TreeNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     TreeNode *<span class="built_in">left</span>;</span><br><span class="line"> *     TreeNode *<span class="built_in">right</span>;</span><br><span class="line"> *     TreeNode(int x) : val(x), <span class="built_in">left</span>(NULL), <span class="built_in">right</span>(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; postorderTraversal(TreeNode* root) &#123;</span><br><span class="line">        vector&lt;int&gt; res;</span><br><span class="line">        stack&lt;TreeNode*&gt; s;</span><br><span class="line">        <span class="keyword">if</span>(root==nullptr) <span class="keyword">return</span> res;</span><br><span class="line">        s.push(root);</span><br><span class="line">        while (root-&gt;<span class="built_in">left</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            s.push(root-&gt;<span class="built_in">left</span>);</span><br><span class="line">            root = root-&gt;<span class="built_in">left</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        while (!s.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            root = s.<span class="built_in">top</span>();</span><br><span class="line">            <span class="keyword">if</span>(root-&gt;<span class="built_in">right</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(res.empty()|<span class="type">|res</span>[res.size()<span class="number">-1</span>]!=root-&gt;<span class="built_in">right</span>-&gt;val)&#123;</span><br><span class="line">                    TreeNode* tmp=root-&gt;<span class="built_in">right</span>;</span><br><span class="line">                    while (tmp)</span><br><span class="line">                    &#123;</span><br><span class="line">                        s.push(tmp);</span><br><span class="line">                        tmp = tmp-&gt;<span class="built_in">left</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    res.push_back(root-&gt;val);</span><br><span class="line">                    s.pop();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                res.push_back(root-&gt;val);</span><br><span class="line">                s.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/08/Data_structure/Hash/" rel="next" title="Hash">
+                <i class="fa fa-chevron-left"></i> Hash
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/08/homework/plu/" rel="prev" title="linear algebra homework">
+                linear algebra homework <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
+
+  
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Ning Ning">
+            
+              <p class="site-author-name" itemprop="name">Ning Ning</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode94-Binary-Tree-Inorder-Traversal"><span class="nav-number">1.</span> <span class="nav-text">Leetcode94:Binary Tree Inorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解"><span class="nav-number">1.2.</span> <span class="nav-text">解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python-code-20ms-11-7MB"><span class="nav-number">1.2.1.</span> <span class="nav-text">python code[20ms 11.7MB]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-code-0ms-8-7MB"><span class="nav-number">1.2.2.</span> <span class="nav-text">c++ code[0ms 8.7MB]</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode144-Binary-Tree-Preorder-Traversal"><span class="nav-number">2.</span> <span class="nav-text">Leetcode144:Binary Tree Preorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解-1"><span class="nav-number">2.2.</span> <span class="nav-text">解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python-code-16ms-11-9MB"><span class="nav-number">2.2.1.</span> <span class="nav-text">python code[16ms 11.9MB]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-code-4ms-9-2MB"><span class="nav-number">2.2.2.</span> <span class="nav-text">c++ code[4ms 9.2MB]</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Leetcode145-Binary-Tree-Postorder-Traversal"><span class="nav-number">3.</span> <span class="nav-text">Leetcode145:Binary Tree Postorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解-2"><span class="nav-number">3.2.</span> <span class="nav-text">解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python-code-28ms-11-8MB"><span class="nav-number">3.2.1.</span> <span class="nav-text">python code[28ms 11.8MB]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c-code-4ms-9-1MB"><span class="nav-number">3.2.2.</span> <span class="nav-text">c++ code[4ms 9.1MB]</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ning Ning</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '6573f911da4349fc9ab6',
+          clientSecret: '034400baf36061ab9814d24129908a063a59ca4a',
+          repo: 'Wegnery219.github.io',
+          owner: 'Wegnery219',
+          admin: ['Wegnery219'],
+          id:'gitalk_20191002120900',
+          labels: 'gitalk'.split(',').filter(l => l),
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: false,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

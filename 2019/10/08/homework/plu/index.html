@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="homework,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="国科大线性代数课程大作业，线性代数plu，qr,household,givens分解算法的python代码。">
+<meta name="keywords" content="homework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linear algebra homework">
+<meta property="og:url" content="https://wegnery219.github.io/2019/10/08/homework/plu/index.html">
+<meta property="og:site_name" content="Ning Ning">
+<meta property="og:description" content="国科大线性代数课程大作业，线性代数plu，qr,household,givens分解算法的python代码。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-18T02:52:34.212Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linear algebra homework">
+<meta name="twitter:description" content="国科大线性代数课程大作业，线性代数plu，qr,household,givens分解算法的python代码。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wegnery219.github.io/2019/10/08/homework/plu/">
+
+
+
+
+
+  <title>linear algebra homework | Ning Ning</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ning Ning</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">投己所好</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wegnery219.github.io/2019/10/08/homework/plu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ning Ning">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ning Ning">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linear algebra homework</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-08T12:09:00+00:00">
+                2019-10-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  国科大线性代数课程大作业，线性代数plu，qr,household,givens分解算法的python代码。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="plu分解"><a href="#plu分解" class="headerlink" title="plu分解"></a>plu分解</h3><p>python:<br>exchange函数如果不用np.copy会导致改完之后的两行是一样的，因为python传的是引用。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">import numpy as <span class="built_in">np</span></span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">交换矩阵中的两行</span><br><span class="line">'''</span><br><span class="line">def exchange(mat, rowi, rowj):</span><br><span class="line">    tmp = <span class="built_in">np</span>.<span class="built_in">copy</span>(mat[rowi,:])</span><br><span class="line">    mat[rowi,:] = mat[rowj,:]</span><br><span class="line">    mat[rowj,:] = tmp</span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">PLU分解函数</span><br><span class="line">'''</span><br><span class="line">def LUDecompose (<span class="built_in">matrix</span>): </span><br><span class="line">    rows,<span class="built_in">columns</span>=<span class="built_in">np</span>.shape(<span class="built_in">matrix</span>)</span><br><span class="line">    L=<span class="built_in">np</span>.zeros((rows,<span class="built_in">columns</span>))</span><br><span class="line">    U=<span class="built_in">np</span>.zeros((rows,<span class="built_in">columns</span>))</span><br><span class="line">    P=<span class="built_in">np</span>.<span class="built_in">identity</span>(<span class="built_in">columns</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(rows):</span><br><span class="line">        maxindex = <span class="built_in">np</span>.argmax(<span class="built_in">np</span>.<span class="built_in">abs</span>(<span class="built_in">matrix</span>[i:,i]))</span><br><span class="line">        maxindex = maxindex+i</span><br><span class="line">        <span class="keyword">if</span> maxindex!=i:</span><br><span class="line">            exchange(<span class="built_in">matrix</span>, maxindex, i)</span><br><span class="line">            exchange(L,maxindex,i)</span><br><span class="line">            exchange(P,maxindex,i)</span><br><span class="line">        L[i][i]=<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">row</span> <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, rows):</span><br><span class="line">            param = <span class="built_in">matrix</span>[<span class="built_in">row</span>][i]/<span class="built_in">matrix</span>[i][i]</span><br><span class="line">            L[<span class="built_in">row</span>][i]=param</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, <span class="built_in">columns</span>):</span><br><span class="line">                <span class="built_in">matrix</span>[<span class="built_in">row</span>][j]=(-param)*<span class="built_in">matrix</span>[i][j]+<span class="built_in">matrix</span>[<span class="built_in">row</span>][j]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(rows):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i,<span class="built_in">columns</span>):</span><br><span class="line">            U[i][j]=<span class="built_in">matrix</span>[i][j]</span><br><span class="line">    <span class="built_in">return</span> P,L,U</span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">PLU 分解：</span><br><span class="line"><span class="number">1</span>. 将<span class="built_in">matrix</span>修改成需要测试的矩阵，如main函数中的<span class="built_in">matrix</span>所示，注意dtype=<span class="built_in">float</span></span><br><span class="line"><span class="number">2</span>. 运行.py文件，python LU.py或者直接在ide中运行，输出P,L,U</span><br><span class="line">注：</span><br><span class="line">输入矩阵必须是平方阵</span><br><span class="line">需要安装依赖库numpy</span><br><span class="line">'''</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    <span class="built_in">matrix</span> = <span class="built_in">np</span>.<span class="built_in">array</span>([[<span class="number">1</span>,<span class="number">2</span>,-<span class="number">3</span>,<span class="number">4</span>],</span><br><span class="line">                       [<span class="number">4</span>,<span class="number">8</span>,<span class="number">12</span>,-<span class="number">8</span>],</span><br><span class="line">                       [<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>],</span><br><span class="line">                       [-<span class="number">3</span>,-<span class="number">1</span>,<span class="number">1</span>,-<span class="number">4</span>]], dtype=<span class="built_in">float</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"original matrix:"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">matrix</span>)</span><br><span class="line">    # 判断是否是平方阵</span><br><span class="line">    rows,<span class="built_in">columns</span> = <span class="built_in">np</span>.shape(<span class="built_in">matrix</span>)</span><br><span class="line">    <span class="keyword">if</span> rows!=<span class="built_in">columns</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"matrix need to be a square matrix"</span>)</span><br><span class="line">        exit(-<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        P,L,U=LUDecompose(<span class="built_in">matrix</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"P:"</span>)</span><br><span class="line">        <span class="built_in">print</span>(P)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"L:"</span>)</span><br><span class="line">        <span class="built_in">print</span>(L)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"U:"</span>)</span><br><span class="line">        <span class="built_in">print</span>(U)</span><br></pre></td></tr></table></figure>
+
+<h3 id="全部分解"><a href="#全部分解" class="headerlink" title="全部分解"></a>全部分解</h3><p>根据程序提示，输入1为plu分解，输入2为QR分解，输入3为household，输入4为givens，输入5为退出程序。</p>
+<p>如果想修改矩阵查看某个分解对于不同矩阵的效果，请在Decompose.py中的main函数中找到对应分解(PLU,QR,Household,Givens)，修改其中的matrix</p>
+<p>如果不修改原始矩阵显示输出为如下所示：<br>Welcome to Decompose program<br>Input the Number of the Decompose<br>1.PLU  2.QR  3.Household  4.Givens 5.quit program<br>By the way,if you wanna to change original matrix, you need to alter it in the python file<br>Input Number:1<br>original PLU matrix:<br>[[ 1.  2. -3.  4.]<br> [ 4.  8. 12. -8.]<br> [ 2.  3.  2.  1.]<br> [-3. -1.  1. -4.]]<br>P:<br>[[0. 1. 0. 0.]<br> [0. 0. 0. 1.]<br> [1. 0. 0. 0.]<br> [0. 0. 1. 0.]]<br>L:<br>[[ 1.          0.          0.          0.        ]<br> [-0.75        1.          0.          0.        ]<br> [ 0.25        0.          1.          0.        ]<br> [ 0.5        -0.2         0.33333333  1.        ]]<br>U:<br>[[  4.   8.  12.  -8.]<br> [  0.   5.  10. -10.]<br> [  0.   0.  -6.   6.]<br> [  0.   0.   0.   1.]]</p>
+<p>Input Number:2<br>origin QR matrix:<br>[[  0. -20. -14.]<br> [  3.  27.  -4.]<br> [  4.  11.  -2.]]<br>Q:<br>[[ 0.   -0.8  -0.6 ]<br> [ 0.6   0.48 -0.64]<br> [ 0.8  -0.36  0.48]]<br>R:<br>[[ 5. 25. -4.]<br> [ 0. 25. 10.]<br> [ 0.  0. 10.]]</p>
+<p>Input Number:3<br>origin Household matrix:<br>[[  0. -20. -14.]<br> [  3.  27.  -4.]<br> [  4.  11.  -2.]]<br>R:<br>[[ 5. 25. -4.]<br> [ 0. 25. 10.]<br> [ 0.  0. 10.]]<br>Q:<br>[[ 0.    0.6   0.8 ]<br> [-0.8   0.48 -0.36]<br> [-0.6  -0.64  0.48]]</p>
+<p>Input Number:4<br>origin Givens matrix:<br>[[  0. -20. -14.]<br> [  3.  27.  -4.]<br> [  4.  11.  -2.]]<br>R:<br>[[ 5. 25. -4.]<br> [ 0. 25. 10.]<br> [ 0. -0. 10.]]<br>Q:<br>[[ 0.    0.6   0.8 ]<br> [-0.8   0.48 -0.36]<br> [-0.6  -0.64  0.48]]</p>
+<p>Input Number:5<br>GoodBye</p>
+<p>注：其中的例子均为老师上课ppt中的原样例</p>
+<h4 id="python-code"><a href="#python-code" class="headerlink" title="python code"></a>python code</h4><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">import numpy as <span class="built_in">np</span> </span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">交换矩阵中的两行</span><br><span class="line">'''</span><br><span class="line">def exchange(mat, rowi, rowj):</span><br><span class="line">    tmp = <span class="built_in">np</span>.<span class="built_in">copy</span>(mat[rowi,:])</span><br><span class="line">    mat[rowi,:] = mat[rowj,:]</span><br><span class="line">    mat[rowj,:] = tmp</span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">PLU分解函数</span><br><span class="line">'''</span><br><span class="line">def LUDecompose (<span class="built_in">matrix</span>): </span><br><span class="line">    rows,<span class="built_in">columns</span>=<span class="built_in">np</span>.shape(<span class="built_in">matrix</span>)</span><br><span class="line">    L=<span class="built_in">np</span>.zeros((rows,<span class="built_in">columns</span>))</span><br><span class="line">    U=<span class="built_in">np</span>.zeros((rows,<span class="built_in">columns</span>))</span><br><span class="line">    P=<span class="built_in">np</span>.<span class="built_in">identity</span>(<span class="built_in">columns</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(rows):</span><br><span class="line">        maxindex = <span class="built_in">np</span>.argmax(<span class="built_in">np</span>.<span class="built_in">abs</span>(<span class="built_in">matrix</span>[i:,i]))</span><br><span class="line">        maxindex = maxindex+i</span><br><span class="line">        <span class="keyword">if</span> maxindex!=i:</span><br><span class="line">            exchange(<span class="built_in">matrix</span>, maxindex, i)</span><br><span class="line">            exchange(L,maxindex,i)</span><br><span class="line">            exchange(P,maxindex,i)</span><br><span class="line">        L[i][i]=<span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">row</span> <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, rows):</span><br><span class="line">            param = <span class="built_in">matrix</span>[<span class="built_in">row</span>][i]/<span class="built_in">matrix</span>[i][i]</span><br><span class="line">            L[<span class="built_in">row</span>][i]=param</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, <span class="built_in">columns</span>):</span><br><span class="line">                <span class="built_in">matrix</span>[<span class="built_in">row</span>][j]=(-param)*<span class="built_in">matrix</span>[i][j]+<span class="built_in">matrix</span>[<span class="built_in">row</span>][j]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(rows):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i,<span class="built_in">columns</span>):</span><br><span class="line">            U[i][j]=<span class="built_in">matrix</span>[i][j]</span><br><span class="line">    <span class="built_in">return</span> P,L,U</span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">QR分解函数</span><br><span class="line">'''</span><br><span class="line">def QRDecompose(<span class="built_in">matrix</span>):</span><br><span class="line">    rows,<span class="built_in">columns</span> = <span class="built_in">np</span>.shape(<span class="built_in">matrix</span>)</span><br><span class="line">    Q = <span class="built_in">np</span>.zeros((rows, <span class="built_in">columns</span>))</span><br><span class="line">    R = <span class="built_in">np</span>.zeros((rows, <span class="built_in">columns</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(rows):</span><br><span class="line">        x = <span class="built_in">matrix</span>[:,k]</span><br><span class="line">        x_copy = <span class="built_in">matrix</span>[:,k]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k+<span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> j==k:</span><br><span class="line">                R[j][k]=<span class="built_in">np</span>.linalg.norm(x)</span><br><span class="line">                Q[:,k]=x / R[j][k]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                R[j][k]=<span class="built_in">np</span>.dot(Q[:,j],x_copy)</span><br><span class="line">                x = x - R[j][k]*Q[:,j]</span><br><span class="line">    <span class="built_in">return</span> R,Q</span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">Household</span><br><span class="line">'''</span><br><span class="line">def Household(<span class="built_in">matrix</span>):</span><br><span class="line">    rows,<span class="built_in">columns</span> = <span class="built_in">np</span>.shape(<span class="built_in">matrix</span>)</span><br><span class="line">    R=[]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(rows-<span class="number">1</span>):</span><br><span class="line">        A=<span class="built_in">matrix</span>[i:rows,i:rows]</span><br><span class="line">        R.<span class="built_in">append</span>(<span class="built_in">np</span>.<span class="built_in">identity</span>(rows))</span><br><span class="line">        e1=<span class="built_in">np</span>.zeros((<span class="number">1</span>,rows-i))</span><br><span class="line">        e1[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">1</span></span><br><span class="line">        u1=A[:,<span class="number">0</span>]-<span class="built_in">np</span>.linalg.norm(A[:,<span class="number">0</span>])*e1</span><br><span class="line">        u1_T=<span class="built_in">np</span>.<span class="built_in">transpose</span>(u1)</span><br><span class="line">        R_sub=<span class="built_in">np</span>.<span class="built_in">identity</span>(rows-i)-<span class="number">2</span>*(<span class="built_in">np</span>.dot(u1_T,u1))/<span class="built_in">np</span>.dot(u1,u1_T)</span><br><span class="line">        R[i][i:rows,i:rows]=R_sub</span><br><span class="line">        <span class="built_in">matrix</span>[i:rows,i:rows]=<span class="built_in">np</span>.around(<span class="built_in">np</span>.dot(R_sub,A),decimals=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    P=<span class="built_in">np</span>.<span class="built_in">identity</span>(rows)</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(len(R)):</span><br><span class="line">        P = <span class="built_in">np</span>.dot(R[j], P)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">return</span> <span class="built_in">matrix</span>,P</span><br><span class="line"></span><br><span class="line">'''</span><br><span class="line">Givens</span><br><span class="line">'''</span><br><span class="line">def Givens(<span class="built_in">matrix</span>):</span><br><span class="line">    rows,<span class="built_in">columns</span> = <span class="built_in">np</span>.shape(<span class="built_in">matrix</span>)</span><br><span class="line">    P=[[[] <span class="keyword">for</span> <span class="symbol">_</span> <span class="keyword">in</span> <span class="built_in">range</span>(rows)] <span class="keyword">for</span> <span class="symbol">_</span> <span class="keyword">in</span> <span class="built_in">range</span>(rows)]</span><br><span class="line">    Q=<span class="built_in">np</span>.<span class="built_in">identity</span>(rows)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,rows-<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, rows):</span><br><span class="line">            <span class="built_in">col</span>=<span class="built_in">matrix</span>[:,i]</span><br><span class="line">            x = <span class="built_in">col</span>[i]</span><br><span class="line">            y = <span class="built_in">col</span>[j]</span><br><span class="line">            <span class="built_in">cos</span>=x/<span class="built_in">np</span>.<span class="built_in">sqrt</span>(x**<span class="number">2</span>+y**<span class="number">2</span>)</span><br><span class="line">            <span class="built_in">sin</span>=y/<span class="built_in">np</span>.<span class="built_in">sqrt</span>(x**<span class="number">2</span>+y**<span class="number">2</span>)</span><br><span class="line">            P[i][j]=<span class="built_in">np</span>.<span class="built_in">identity</span>(<span class="number">3</span>)</span><br><span class="line">            P[i][j][i,j]=<span class="built_in">sin</span></span><br><span class="line">            P[i][j][j,i]=-<span class="built_in">sin</span></span><br><span class="line">            P[i][j][i,i]=<span class="built_in">cos</span></span><br><span class="line">            P[i][j][j,j]=<span class="built_in">cos</span></span><br><span class="line">            <span class="built_in">matrix</span>=<span class="built_in">np</span>.around(<span class="built_in">np</span>.dot(P[i][j],<span class="built_in">matrix</span>),decimals=<span class="number">3</span>)</span><br><span class="line">            Q=<span class="built_in">np</span>.dot(P[i][j], Q)</span><br><span class="line">    <span class="built_in">return</span> <span class="built_in">matrix</span>,Q</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Welcome to Decompose program"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"Input the Number of the Decompose"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"1.PLU  2.QR  3.Household  4.Givens 5.quit program"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"By the way,if you wanna to change original matrix, you need to alter it in the python file"</span>)</span><br><span class="line">    <span class="keyword">while</span> True:</span><br><span class="line">        number=input(<span class="string">"Input Number:"</span>)</span><br><span class="line">        number=int(number)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> number==<span class="number">1</span>:</span><br><span class="line">            <span class="built_in">matrix</span> = <span class="built_in">np</span>.<span class="built_in">array</span>([[<span class="number">1</span>,<span class="number">2</span>,-<span class="number">3</span>,<span class="number">4</span>],</span><br><span class="line">                        [<span class="number">4</span>,<span class="number">8</span>,<span class="number">12</span>,-<span class="number">8</span>],</span><br><span class="line">                        [<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>],</span><br><span class="line">                        [-<span class="number">3</span>,-<span class="number">1</span>,<span class="number">1</span>,-<span class="number">4</span>]], dtype=<span class="built_in">float</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"original PLU matrix:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">matrix</span>)</span><br><span class="line">            P,L,U=LUDecompose(<span class="built_in">matrix</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"P:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(P)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"L:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(L)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"U:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(U)</span><br><span class="line">        elif number==<span class="number">2</span>:</span><br><span class="line">            <span class="built_in">matrix</span> = <span class="built_in">np</span>.<span class="built_in">array</span>([[<span class="number">0</span>,-<span class="number">20</span>,-<span class="number">14</span>],</span><br><span class="line">                        [<span class="number">3</span>,<span class="number">27</span>,-<span class="number">4</span>],</span><br><span class="line">                        [<span class="number">4</span>,<span class="number">11</span>,-<span class="number">2</span>]], dtype=<span class="built_in">float</span>)</span><br><span class="line">            R, Q = QRDecompose(<span class="built_in">matrix</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"origin QR matrix:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">matrix</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"Q:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(Q)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"R:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(R)</span><br><span class="line">        elif number==<span class="number">3</span>:</span><br><span class="line">            <span class="built_in">matrix</span> = <span class="built_in">np</span>.<span class="built_in">array</span>([[<span class="number">0</span>,-<span class="number">20</span>,-<span class="number">14</span>],</span><br><span class="line">                        [<span class="number">3</span>,<span class="number">27</span>,-<span class="number">4</span>],</span><br><span class="line">                        [<span class="number">4</span>,<span class="number">11</span>,-<span class="number">2</span>]], dtype=<span class="built_in">float</span>)</span><br><span class="line">        </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"origin Household matrix:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">matrix</span>)</span><br><span class="line">            R,Q=Household(<span class="built_in">matrix</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"R:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(R)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"Q:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(Q)</span><br><span class="line">        elif number==<span class="number">4</span>:</span><br><span class="line">            <span class="built_in">matrix</span> = <span class="built_in">np</span>.<span class="built_in">array</span>([[<span class="number">0</span>,-<span class="number">20</span>,-<span class="number">14</span>],</span><br><span class="line">                        [<span class="number">3</span>,<span class="number">27</span>,-<span class="number">4</span>],</span><br><span class="line">                        [<span class="number">4</span>,<span class="number">11</span>,-<span class="number">2</span>]], dtype=<span class="built_in">float</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"origin Givens matrix:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="built_in">matrix</span>)</span><br><span class="line">            R,Q=Givens(<span class="built_in">matrix</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"R:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(R)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"Q:"</span>)</span><br><span class="line">            <span class="built_in">print</span>(Q)</span><br><span class="line">        elif number==<span class="number">5</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"GoodBye"</span>)</span><br><span class="line">            <span class="built_in">break</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">"illegal input"</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"\n"</span>)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/homework/" rel="tag"># homework</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/02/algorithm/树的前中后序遍历/" rel="next" title="树的前中后序遍历">
+                <i class="fa fa-chevron-left"></i> 树的前中后序遍历
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/30/homework/sleep_on/" rel="prev" title="sleep_on function in Linux">
+                sleep_on function in Linux <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
+
+  
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Ning Ning">
+            
+              <p class="site-author-name" itemprop="name">Ning Ning</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#plu分解"><span class="nav-number">1.</span> <span class="nav-text">plu分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全部分解"><span class="nav-number">2.</span> <span class="nav-text">全部分解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python-code"><span class="nav-number">2.1.</span> <span class="nav-text">python code</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ning Ning</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '6573f911da4349fc9ab6',
+          clientSecret: '034400baf36061ab9814d24129908a063a59ca4a',
+          repo: 'Wegnery219.github.io',
+          owner: 'Wegnery219',
+          admin: ['Wegnery219'],
+          id:'gitalk_20191008120900',
+          labels: 'gitalk'.split(',').filter(l => l),
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: false,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="以Leetcode中min depth,Word Ladder等为例，介绍了几种BFS常见题型。">
+<meta name="keywords" content="algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="广度优先搜索">
+<meta property="og:url" content="https://wegnery219.github.io/2020/05/17/algorithm/广度优先搜索/index.html">
+<meta property="og:site_name" content="Ning Ning">
+<meta property="og:description" content="以Leetcode中min depth,Word Ladder等为例，介绍了几种BFS常见题型。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-18T02:52:34.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="广度优先搜索">
+<meta name="twitter:description" content="以Leetcode中min depth,Word Ladder等为例，介绍了几种BFS常见题型。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wegnery219.github.io/2020/05/17/algorithm/广度优先搜索/">
+
+
+
+
+
+  <title>广度优先搜索 | Ning Ning</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ning Ning</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">投己所好</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wegnery219.github.io/2020/05/17/algorithm/广度优先搜索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ning Ning">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ning Ning">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">广度优先搜索</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-17T19:50:32+00:00">
+                2020-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  以Leetcode中min depth,Word Ladder等为例，介绍了几种BFS常见题型。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>广度优先搜索是指在访问一个节点时，首先访问和这个节点相邻的节点，如果满足condition，则加入待访问列表，等待一起进行下一层的访问，直到访问到target。一般用于访问最短距离，可用BFS解决的问题通常也可用DFS解决，BFS的空间复杂度较高。虽然BFS有通用模板，参考:<a href="https://labuladong.gitbook.io/algo/di-ling-zhang-bi-du-xi-lie/bfs-kuang-jia" target="_blank" rel="noopener">BFS算法套路框架</a>，模版伪代码：</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">queue&lt;Node&gt; q</span><br><span class="line"><span class="built_in">set</span>&lt;Node&gt; visited</span><br><span class="line"></span><br><span class="line">q.push(start)</span><br><span class="line">statistics=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">    <span class="built_in">size</span> = q.<span class="built_in">size</span>()</span><br><span class="line">    <span class="keyword">for</span> (i;i&lt;<span class="built_in">size</span>;i++)&#123;</span><br><span class="line">        NowNode = q.front()</span><br><span class="line">        q.pop()</span><br><span class="line">        compare <span class="keyword">with</span> target，<span class="keyword">if</span> same, return</span><br><span class="line">        visited.insert(NowNode)</span><br><span class="line">        add Nodes Adjacent <span class="keyword">with</span> NowNode <span class="keyword">if</span> These Nodes <span class="built_in">not</span> seen <span class="built_in">in</span> visited <span class="built_in">and</span> legal</span><br><span class="line">    &#125;</span><br><span class="line">    statistics++</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不同的题用法也不太一样，下面以leetcode题介绍几种BFS的类型:</p>
+<h3 id="Tree"><a href="#Tree" class="headerlink" title="Tree"></a>Tree</h3><p><strong>经典例题1:<a href="https://leetcode.com/problems/minimum-depth-of-binary-tree/" target="_blank" rel="noopener">111. Minimum Depth of Binary Tree</a></strong><br>求树的最小高度，即root到target(第一个叶节点)的距离。树的BFS不需要设置visited,节点不存在指向父节点的指针，从root到叶子节点不会走回头路。涉及树的BFS多数要一排一排访问，所以队列里要存一下当前这一排的长度，然后一排排访问，访问过一排之后depth+1</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode *left;</span></span><br><span class="line"><span class="comment"> *     TreeNode *right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!root) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        <span class="keyword">int</span> depth=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> size=q.size();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                TreeNode* nownode=q.front();</span><br><span class="line">                q.pop();</span><br><span class="line">                <span class="keyword">if</span>(!nownode-&gt;left &amp;&amp; !nownode-&gt;right) <span class="keyword">return</span> depth;</span><br><span class="line">                <span class="keyword">if</span>(nownode-&gt;left) q.push(nownode-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(nownode-&gt;right) q.push(nownode-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            depth++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>经典例题2:<a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/" target="_blank" rel="noopener">103. Binary Tree Zigzag Level Order Traversal</a></strong><br>一排一排访问的典型例题，这个题不需要depth变量</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TreeNode</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> val;</span><br><span class="line">    TreeNode* left;</span><br><span class="line">    TreeNode* right;</span><br><span class="line">    TreeNode(<span class="keyword">int</span> x):val(x),left(<span class="literal">NULL</span>),right(<span class="literal">NULL</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; zigzagLevelOrder(TreeNode* root) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="keyword">if</span>(!root)&#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        <span class="keyword">bool</span> isleft=<span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">while</span> (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> size = q.size();</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; trans;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">                TreeNode* nowtree = q.front();</span><br><span class="line">                q.pop();</span><br><span class="line">                <span class="keyword">int</span> value = nowtree-&gt;val;</span><br><span class="line">                trans.push_back(value);</span><br><span class="line">                <span class="keyword">if</span>(nowtree-&gt;left) q.push(nowtree-&gt;left);</span><br><span class="line">                <span class="keyword">if</span>(nowtree-&gt;right) q.push(nowtree-&gt;right);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(isleft) res.push_back(trans);</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                reverse(trans.begin(),trans.end());</span><br><span class="line">                res.push_back(trans);</span><br><span class="line">            &#125;</span><br><span class="line">            isleft=!isleft;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Surrounded-Regions"><a href="#Surrounded-Regions" class="headerlink" title="Surrounded Regions"></a>Surrounded Regions</h3><p><strong>经典例题1:<a href="https://leetcode.com/problems/surrounded-regions/" target="_blank" rel="noopener">130. Surrounded Regions</a></strong><br>连通区域问题，发现在一幅图中的连通区域，对区域进行操作。这种问题可以用BFS也可以用DFS，找到一个点，从而发现全部点，依次找。这里是肯定需要记录是否访问过该节点，否则下一个节点反向操作时候一定会重复访问，和一个节点相邻的节点就是上下左右的点。<br>这里发现边界上的O是解决问题的关键，和边界连通O的O一定不是surronded by X,不能替换，其它O可以替换。而寻找和边界连通的O的方式是BFS或者DFS。BFS的标准框架是需要一个visited来做记录访问过哪些节点，但是这里可以利用一个题目的特点，可以将访问过的节点的value改成‘#’,减少数据存储，反正最后也要再全部遍历一遍图看哪些节点可以改掉‘O‘<br>C++ BFS[20ms 10.3MB]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(board.size()==<span class="number">0</span> || board[<span class="number">0</span>].size()==<span class="number">0</span> || board.size()==<span class="number">1</span> || board[<span class="number">0</span>].size()==<span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> width = board.size();</span><br><span class="line">        <span class="keyword">int</span> length = board[<span class="number">0</span>].size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;width;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">                <span class="keyword">bool</span> isEdge = (i==<span class="number">0</span> || j==<span class="number">0</span> || i==width<span class="number">-1</span> || j==length<span class="number">-1</span>);</span><br><span class="line">                <span class="keyword">if</span>(isEdge &amp;&amp; board[i][j]!=<span class="string">'#'</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(board[i][j]==<span class="string">'O'</span>)&#123;board[i][j]=<span class="string">'#'</span>;bfs(board,i,j);&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;width;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j]==<span class="string">'O'</span>) board[i][j]=<span class="string">'X'</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j]==<span class="string">'#'</span>) board[i][j]=<span class="string">'O'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board,<span class="keyword">int</span> w, <span class="keyword">int</span> l)</span></span>&#123;</span><br><span class="line">        <span class="built_in">queue</span>&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; q;</span><br><span class="line">        pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; start=make_pair(w,l);</span><br><span class="line">        q.push(start);</span><br><span class="line">        <span class="keyword">while</span> (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; nowtop = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            w=nowtop.first;</span><br><span class="line">            l=nowtop.second;</span><br><span class="line">            <span class="comment">//up</span></span><br><span class="line">            <span class="keyword">if</span>(w<span class="number">-1</span>&gt;<span class="number">0</span> &amp;&amp; board[w<span class="number">-1</span>][l]==<span class="string">'O'</span>)&#123;q.push(make_pair(w<span class="number">-1</span>,l));board[w<span class="number">-1</span>][l]=<span class="string">'#'</span>;&#125;</span><br><span class="line">            <span class="comment">//down</span></span><br><span class="line">            <span class="keyword">if</span>(w+<span class="number">1</span>&lt;board.size() &amp;&amp; board[w+<span class="number">1</span>][l]==<span class="string">'O'</span>)&#123;q.push(make_pair(w+<span class="number">1</span>,l));board[w+<span class="number">1</span>][l]=<span class="string">'#'</span>;&#125;</span><br><span class="line">            <span class="comment">//left</span></span><br><span class="line">            <span class="keyword">if</span>(l<span class="number">-1</span>&gt;<span class="number">0</span> &amp;&amp; board[w][l<span class="number">-1</span>]==<span class="string">'O'</span>)&#123;q.push(make_pair(w,l<span class="number">-1</span>));board[w][l<span class="number">-1</span>]=<span class="string">'#'</span>;&#125;</span><br><span class="line">            <span class="comment">//right</span></span><br><span class="line">            <span class="keyword">if</span>(l+<span class="number">1</span>&lt;board[<span class="number">0</span>].size() &amp;&amp; board[w][l+<span class="number">1</span>]==<span class="string">'O'</span>)&#123;q.push(make_pair(w,l+<span class="number">1</span>));board[w][l+<span class="number">1</span>]=<span class="string">'#'</span>;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>C++ DFS with Stack[28ms 10.4MB]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(board.size()==<span class="number">0</span> || board[<span class="number">0</span>].size()==<span class="number">0</span> || board.size()==<span class="number">1</span> || board[<span class="number">0</span>].size()==<span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> width = board.size();</span><br><span class="line">        <span class="keyword">int</span> length = board[<span class="number">0</span>].size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;width;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">                <span class="keyword">bool</span> isEdge = (i==<span class="number">0</span> || j==<span class="number">0</span> || i==width<span class="number">-1</span> || j==length<span class="number">-1</span>);</span><br><span class="line">                <span class="keyword">if</span>(isEdge &amp;&amp; board[i][j]!=<span class="string">'#'</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(board[i][j]==<span class="string">'O'</span>)&#123;board[i][j]=<span class="string">'#'</span>;dfs(board,i,j);&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;width;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j]==<span class="string">'O'</span>) board[i][j]=<span class="string">'X'</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j]==<span class="string">'#'</span>) board[i][j]=<span class="string">'O'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> w, <span class="keyword">int</span> l)</span></span>&#123;</span><br><span class="line">        <span class="built_in">stack</span>&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; s;</span><br><span class="line">        s.push(make_pair(w,l));</span><br><span class="line">        <span class="keyword">while</span> (!s.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; nowtop=s.top();</span><br><span class="line">            w=nowtop.first;</span><br><span class="line">            l=nowtop.second;</span><br><span class="line">            <span class="comment">//up</span></span><br><span class="line">            <span class="keyword">if</span>(w<span class="number">-1</span>&gt;<span class="number">0</span> &amp;&amp; board[w<span class="number">-1</span>][l]==<span class="string">'O'</span>)&#123;s.push(make_pair(w<span class="number">-1</span>,l));board[w<span class="number">-1</span>][l]=<span class="string">'#'</span>;<span class="keyword">continue</span>;&#125;</span><br><span class="line">            <span class="comment">//down</span></span><br><span class="line">            <span class="keyword">if</span>(w+<span class="number">1</span>&lt;board.size() &amp;&amp; board[w+<span class="number">1</span>][l]==<span class="string">'O'</span>)&#123;s.push(make_pair(w+<span class="number">1</span>,l));board[w+<span class="number">1</span>][l]=<span class="string">'#'</span>;<span class="keyword">continue</span>;&#125;</span><br><span class="line">            <span class="comment">//left</span></span><br><span class="line">            <span class="keyword">if</span>(l<span class="number">-1</span>&gt;<span class="number">0</span> &amp;&amp; board[w][l<span class="number">-1</span>]==<span class="string">'O'</span>)&#123;s.push(make_pair(w,l<span class="number">-1</span>));board[w][l<span class="number">-1</span>]=<span class="string">'#'</span>;<span class="keyword">continue</span>;&#125;</span><br><span class="line">            <span class="comment">//right</span></span><br><span class="line">            <span class="keyword">if</span>(l+<span class="number">1</span>&lt;board[<span class="number">0</span>].size() &amp;&amp; board[w][l+<span class="number">1</span>]==<span class="string">'O'</span>)&#123;s.push(make_pair(w,l+<span class="number">1</span>));board[w][l+<span class="number">1</span>]=<span class="string">'#'</span>;<span class="keyword">continue</span>;&#125;</span><br><span class="line">            s.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>C++ DFS Reverse[28ms 10.2MB]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(board.size()==<span class="number">0</span> || board[<span class="number">0</span>].size()==<span class="number">0</span> || board.size()==<span class="number">1</span> || board[<span class="number">0</span>].size()==<span class="number">1</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> width = board.size();</span><br><span class="line">        <span class="keyword">int</span> length = board[<span class="number">0</span>].size();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;width;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">                <span class="keyword">bool</span> isEdge = (i==<span class="number">0</span> || j==<span class="number">0</span> || i==width<span class="number">-1</span> || j==length<span class="number">-1</span>);</span><br><span class="line">                <span class="keyword">if</span>(isEdge &amp;&amp; board[i][j]==<span class="string">'O'</span>)&#123;</span><br><span class="line">                    dfs(board,i,j);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;width;i++)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; length; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j]==<span class="string">'O'</span>) board[i][j]=<span class="string">'X'</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j]==<span class="string">'#'</span>) board[i][j]=<span class="string">'O'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board, <span class="keyword">int</span> w, <span class="keyword">int</span> l)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(w&lt;<span class="number">0</span> || w&gt;=board.size()||l&lt;<span class="number">0</span>||l&gt;=board[<span class="number">0</span>].size() || board[w][l]==<span class="string">'#'</span> || board[w][l]==<span class="string">'X'</span>) <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        board[w][l] = <span class="string">'#'</span>;</span><br><span class="line">        dfs(board, w - <span class="number">1</span>, l); <span class="comment">// 上</span></span><br><span class="line">        dfs(board, w + <span class="number">1</span>, l); <span class="comment">// 下</span></span><br><span class="line">        dfs(board, w, l - <span class="number">1</span>); <span class="comment">// 左</span></span><br><span class="line">        dfs(board, w, l + <span class="number">1</span>); <span class="comment">// 右</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="manipulation"><a href="#manipulation" class="headerlink" title="manipulation"></a>manipulation</h3><p>manipulation是指对某些初始节点进行操作，旋转，变换字符，变换数字等，要求必须经过某些指定set(Leetcode127 word ladder)或者不能经过某些指定set(Leetcode752 open the lock)，这些需要在判断是否加入队列时修改，最终判断是否能达到target。对这种题来讲，变化一次就是到达了相邻节点，不同题要求返回的东西不一样。<br><strong>经典例题1:<a href="https://leetcode.com/problems/word-ladder/" target="_blank" rel="noopener">127. Word Ladder</a></strong><br>看题可以得到用简单的BFS套模版就可以解，但是tle了。tle的做法是到一个单词之后，在wordlist里搜索和它距离是1的，每次都要计算一次。坏处是随着wordlist规模增长时间大幅度增长，所以会有几个case过不去。尽量把查找变成O(1),上一种做法的查找是O(N),N是wordlist长度。O(1)的做法就是把wordlist变成hash表，unordered set,每次变换字母，因为字母一共就26个，而且这道题的word长度都没有很长。第一种TLE做法的搜索复杂度O(NL) N是worldlist长度，L是单词长度。第二种做法的搜索复杂度是O(26*L)把N变成了一个常数了。每次要在比较终止条件后把元素加入visited。<br>C++ [128ms 13MB]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; wordlist;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span>&amp; wl:wordList) wordlist.insert(wl);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">queue</span>&lt;<span class="built_in">string</span>&gt; q;</span><br><span class="line">        <span class="keyword">int</span> step=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> length = beginWord.size();</span><br><span class="line"></span><br><span class="line">        q.push(beginWord);</span><br><span class="line">        <span class="keyword">while</span> (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> size = q.size();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">                <span class="built_in">string</span> now = q.front();</span><br><span class="line">                q.pop();</span><br><span class="line">                <span class="keyword">if</span>(now==endWord) <span class="keyword">return</span> step;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">                    <span class="keyword">char</span> ch=now[j];</span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">char</span> c=<span class="string">'a'</span>;c&lt;=<span class="string">'z'</span>;c++)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(ch==c) <span class="keyword">continue</span>;</span><br><span class="line">                        now[j]=c;</span><br><span class="line">                        <span class="keyword">if</span>(wordlist.find(now)!=wordlist.end())&#123;</span><br><span class="line">                            q.push(now);</span><br><span class="line">                            wordlist.erase(now);</span><br><span class="line">                        &#125;</span><br><span class="line">                        now[j]=ch;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            step++;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>后面为了优化时间，做了双向BFS，双向BFS是指从beginword和endword两头同时开搜，每次从最短的set开始搜，时间减半。双向BFS要处理一个case,如果end word没在wordlist里，要直接返回0.不处理这个case不行，因为可能endword变变变变到最后也是在wordlist里和beginword重逢了。但是它自己不在wordlist里，在这道题这种情况该返回0。<br>C++ [76ms 13.5MB]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; wordlist(wordList.begin(),wordList.end());</span><br><span class="line">        <span class="keyword">if</span>(wordlist.find(endWord)==wordlist.end()) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; begins,ends,visited;</span><br><span class="line">        <span class="keyword">int</span> step=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> length = beginWord.size();</span><br><span class="line"></span><br><span class="line">        begins.insert(beginWord);</span><br><span class="line">        ends.insert(endWord);</span><br><span class="line">        <span class="keyword">while</span> (!begins.empty() &amp;&amp; !ends.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; tmp;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> word:begins)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(ends.find(word)!=ends.end()) <span class="keyword">return</span> step;</span><br><span class="line">                visited.insert(word);</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;length;i++)&#123;</span><br><span class="line">                    <span class="keyword">char</span> ch = word[i];</span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">char</span> c=<span class="string">'a'</span>;c&lt;=<span class="string">'z'</span>;c++)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(ch==c) <span class="keyword">continue</span>;</span><br><span class="line">                        word[i]=c;</span><br><span class="line">                        <span class="keyword">if</span>(visited.find(word)==visited.end() &amp;&amp; wordlist.find(word)!=wordlist.end())&#123;</span><br><span class="line">                            tmp.insert(word);</span><br><span class="line">                        &#125;</span><br><span class="line">                        word[i]=ch;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(tmp.size()&gt;ends.size())&#123;</span><br><span class="line">                begins=ends;</span><br><span class="line">                ends=tmp;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                begins=tmp;</span><br><span class="line">            &#125;</span><br><span class="line">            step++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>经典例题2:<a href="https://leetcode.com/problems/word-ladder-ii/" target="_blank" rel="noopener">126. Word Ladder II</a></strong><br>和上一题的区别是需要返回整个单词搜索的结果，还要返回全部的最短结果。<br>这里就会涉及到重复单词的问题，之前我们遇到重复单词的时候，只需要判断visited里有没有就可以了，这里不能这样。举个例子：[[“hit”,”lit”,”lot”,”log”,”cog”], [“hit”,”hot”,”lot”,”log”,”cog”]],这里出现了两次lot,而按照word ladder I的方法，第二次lot是不会被访问的。但是如果不设定visited必然会出现循环。这里观察题，如果出现了同样的单词,lot，且在最终结果内，它们一定是在同一个位置，比如上面的例子在第三个位置的lot，如果不在同一个位置，一个在第三个位置，另一个lot出现在了第四个位置，那么第四个位置的一定不是最短的。所以在每一次访问过当前层之后，将这一层访问过的全部加入visited.<br>定义了一个结构体，有prev指针，返回结果的时候一个循环就可以了。注意在 <code>wordlink *p= new wordlink(word);</code> 这一句的时候注意new。指针不能指向临时变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">wordlink</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="built_in">string</span> word;</span><br><span class="line">    wordlink* prev;</span><br><span class="line">    wordlink(<span class="built_in">string</span> s): word(s), prev(<span class="literal">nullptr</span>) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; findLadders(<span class="built_in">string</span> beginWord, <span class="built_in">string</span> endWord, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordList) &#123;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; wordset(wordList.begin(), wordList.end());</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; res;</span><br><span class="line">        <span class="comment">// if(wordset.find(endWord)==wordset.end()) return res;</span></span><br><span class="line">        <span class="built_in">queue</span>&lt;wordlink*&gt; q;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="built_in">string</span>&gt; visited,tmp;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> length = beginWord.size();</span><br><span class="line">        <span class="keyword">bool</span> flag=<span class="literal">true</span>;</span><br><span class="line">        </span><br><span class="line">        wordlink start = wordlink(beginWord);</span><br><span class="line">        q.push(&amp;start);</span><br><span class="line">        visited.insert(beginWord);</span><br><span class="line">        <span class="keyword">while</span> (!q.empty() &amp;&amp; flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> size = q.size();</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">                wordlink* now = q.front();</span><br><span class="line">                q.pop();</span><br><span class="line"></span><br><span class="line">                <span class="built_in">string</span> word=now-&gt;word;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;length;j++)&#123;</span><br><span class="line">                    <span class="keyword">char</span> ch = word[j];</span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">char</span> c=<span class="string">'a'</span>;c&lt;=<span class="string">'z'</span>;c++)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(c==ch) <span class="keyword">continue</span>;</span><br><span class="line">                        word[j]=c;</span><br><span class="line">                        <span class="keyword">if</span>(wordset.find(word)!=wordset.end())&#123;</span><br><span class="line">                            <span class="keyword">if</span>(word==endWord)&#123;</span><br><span class="line">                                flag=<span class="literal">false</span>;</span><br><span class="line">                                <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; solu;</span><br><span class="line">                                solu.push_back(word);</span><br><span class="line">                                <span class="keyword">while</span> (now)</span><br><span class="line">                                &#123;</span><br><span class="line">                                    solu.push_back(now-&gt;word);</span><br><span class="line">                                    now = now-&gt;prev;</span><br><span class="line">                                &#125;</span><br><span class="line">                                reverse(solu.begin(),solu.end());</span><br><span class="line">                                res.push_back(solu);</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">else</span>&#123;</span><br><span class="line">                                wordlink *p= <span class="keyword">new</span> wordlink(word);</span><br><span class="line">                                p-&gt;prev=now;</span><br><span class="line">                                <span class="keyword">if</span>(visited.find(word)==visited.end())&#123;</span><br><span class="line">                                    q.push(p);</span><br><span class="line">                                    tmp.insert(word);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        word[j]=ch;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> tmpstr:tmp) visited.insert(tmpstr);</span><br><span class="line">            tmp.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>目前遇到的BFS题型大概这些，其实万变不离其宗，在模版的基础上加以转化就可以了。涉及图论的BFS还没有看到，所以这里先不写，后面再更新啦。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/10/homework/拜占庭将军问题/" rel="next" title="拜占庭将军问题">
+                <i class="fa fa-chevron-left"></i> 拜占庭将军问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
+
+  
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpeg" alt="Ning Ning">
+            
+              <p class="site-author-name" itemprop="name">Ning Ning</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tree"><span class="nav-number">1.</span> <span class="nav-text">Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Surrounded-Regions"><span class="nav-number">2.</span> <span class="nav-text">Surrounded Regions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#manipulation"><span class="nav-number">3.</span> <span class="nav-text">manipulation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ning Ning</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '6573f911da4349fc9ab6',
+          clientSecret: '034400baf36061ab9814d24129908a063a59ca4a',
+          repo: 'Wegnery219.github.io',
+          owner: 'Wegnery219',
+          admin: ['Wegnery219'],
+          id:'gitalk_20200517195032',
+          labels: 'gitalk'.split(',').filter(l => l),
+          perPage: 10,
+          pagerDirection: 'last',
+          createIssueManually: false,
+          distractionFreeMode: false
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
