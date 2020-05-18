@@ -1,6 +1,6 @@
 ---
 title: All Stock
-tags: code
+tags: algorithm
 comment: true
 date: 2019-11-2 12:09:00
 description: 以Leetcode121，122，123,188为例，介绍了四个股票问题的通用解法。
